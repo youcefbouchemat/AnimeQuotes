@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct QuotesScreen: View {
+    
+    @StateObject private var vm: QuotesViewModel = QuotesViewModel(service: QuotesService())
+    
     var body: some View {
-        List {
-            ForEach(Quote.dummyData) { item in
-                QuoteComponent(item: item)
+        Group {
+            if(vm.isLoading)
+            {
+                LoaderComponent(text: "Fetching Quotes")
+            } else {
+                List {
+                    ForEach(vm.quotes,id: \.quote) { item in
+                        QuoteComponent(item: item)
+                    }
+                }.refreshable {
+                    Task {
+                        await vm.refreshRandomQuotes()
+                    }
+                }
             }
+        }.task {
+            await vm.getRandomQuotes()
         }
     }
 }
