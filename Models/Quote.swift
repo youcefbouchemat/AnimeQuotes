@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Quote: Decodable{
+struct Quote: Decodable,Identifiable{
+    var id = UUID()
     let anime: String
     let character: String
     let quote: String

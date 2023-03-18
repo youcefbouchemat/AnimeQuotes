@@ -11,7 +11,7 @@ import SwiftUI
 struct AnimeQuotesApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeScreen()
+            QuotesScreen()
         }
     }
 }
